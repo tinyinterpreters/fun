@@ -17,6 +17,8 @@ type Expr
     | If Expr Expr Expr
     | Var Id
     | Let Id Expr Expr
+    | Fun Id Expr
+    | Call Expr Expr
 
 
 type alias Number =

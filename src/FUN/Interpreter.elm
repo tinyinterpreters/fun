@@ -108,6 +108,12 @@ runExpr expr env =
                         runExpr body (Env.extend name vBound env)
                     )
 
+        Fun _ _ ->
+            Ok <| VNumber 0
+
+        Call _ _ ->
+            Ok <| VNumber 0
+
 
 evalDiff : Value -> Value -> Result RuntimeError Value
 evalDiff va vb =
