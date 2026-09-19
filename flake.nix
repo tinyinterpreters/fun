@@ -13,7 +13,7 @@
       in
       {
         devShells.default = mkElmShell {
-          name = "let";
+          name = "fun";
         };
       }
     );

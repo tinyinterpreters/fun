@@ -1,4 +1,4 @@
-module LET.AST exposing
+module FUN.AST exposing
     ( Expr(..)
     , Id
     , Number

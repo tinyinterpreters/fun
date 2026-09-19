@@ -1,14 +1,14 @@
-module Test.LET.Parser exposing (suite)
+module Test.FUN.Parser exposing (suite)
 
-import LET.AST as AST exposing (..)
-import LET.Parser as P
+import FUN.AST as AST exposing (..)
+import FUN.Parser as P
 import Test exposing (Test, describe)
 import Test.Lib exposing (testValue)
 
 
 suite : Test
 suite =
-    describe "LET.Parser"
+    describe "FUN.Parser"
         [ describe "parse" <|
             List.map (testValue P.parse)
                 -- Constant expressions

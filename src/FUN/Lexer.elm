@@ -1,4 +1,4 @@
-module LET.Lexer exposing (digits, id, keyword, spaces, symbol)
+module FUN.Lexer exposing (digits, id, keyword, spaces, symbol)
 
 import Parser as P exposing ((|.), (|=), Parser)
 import Set exposing (Set)

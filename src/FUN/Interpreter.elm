@@ -1,4 +1,4 @@
-module LET.Interpreter exposing
+module FUN.Interpreter exposing
     ( Error(..)
     , RuntimeError(..)
     , Type(..)
@@ -6,9 +6,9 @@ module LET.Interpreter exposing
     , run
     )
 
-import LET.AST as AST exposing (..)
-import LET.Env as Env
-import LET.Parser as P
+import FUN.AST as AST exposing (..)
+import FUN.Env as Env
+import FUN.Parser as P
 
 
 type Value

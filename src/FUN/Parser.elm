@@ -1,7 +1,7 @@
-module LET.Parser exposing (Error, parse)
+module FUN.Parser exposing (Error, parse)
 
-import LET.AST as AST exposing (..)
-import LET.Lexer as L
+import FUN.AST as AST exposing (..)
+import FUN.Lexer as L
 import Parser as P exposing ((|.), (|=), Parser)
 
 

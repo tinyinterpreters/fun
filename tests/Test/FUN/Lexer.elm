@@ -1,6 +1,6 @@
-module Test.LET.Lexer exposing (suite)
+module Test.FUN.Lexer exposing (suite)
 
-import LET.Lexer as L
+import FUN.Lexer as L
 import Parser as P exposing (Parser)
 import Test exposing (Test, describe)
 import Test.Lib exposing (testValue)
@@ -8,7 +8,7 @@ import Test.Lib exposing (testValue)
 
 suite : Test
 suite =
-    describe "LET.Lexer"
+    describe "FUN.Lexer"
         [ describe "digits" <|
             List.map (testValue <| P.run L.digits)
                 [ ( "123", Just 123 )
