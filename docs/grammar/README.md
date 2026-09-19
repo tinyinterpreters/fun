@@ -17,11 +17,15 @@ Expr     ::= Const
            | If
            | Var
            | Let
+           | Fun
+           | Call
 ```
 
 referenced by:
 
+* Call
 * Diff
+* Fun
 * If
 * Let
 * Program
@@ -99,6 +103,30 @@ referenced by:
 
 * Expr
 
+**Fun:**
+
+![Fun](diagram/Fun.svg)
+
+```
+Fun      ::= 'fun' '(' Id ')' Expr
+```
+
+referenced by:
+
+* Expr
+
+**Call:**
+
+![Call](diagram/Call.svg)
+
+```
+Call     ::= '(' Expr Expr ')'
+```
+
+referenced by:
+
+* Expr
+
 **Number:**
 
 ![Number](diagram/Number.svg)
@@ -121,6 +149,7 @@ Id       ::= [a-z]+
 
 referenced by:
 
+* Fun
 * Let
 * Var
 

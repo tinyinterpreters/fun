@@ -5,12 +5,16 @@ Expr    ::= Const
           | If
           | Var
           | Let
+          | Fun
+          | Call
 Const   ::= Number
 Diff    ::= '-' '(' Expr ',' Expr ')'
 Zero    ::= 'zero?' '(' Expr ')'
 If      ::= 'if' Expr 'then' Expr 'else' Expr
 Var     ::= Id
 Let     ::= 'let' Id '=' Expr 'in' Expr
+Fun     ::= 'fun' '(' Id ')' Expr
+Call    ::= '(' Expr Expr ')'
 Number  ::= [0-9]+
 Id      ::= [a-z]+
 
