@@ -1,0 +1,113 @@
+module LET.Parser exposing (Error, parse)
+
+import LET.AST as AST exposing (..)
+import LET.Lexer as L
+import Parser as P exposing ((|.), (|=), Parser)
+
+
+type alias Error =
+    List P.DeadEnd
+
+
+parse : String -> Result Error AST.Program
+parse =
+    P.run program
+
+
+program : Parser AST.Program
+program =
+    P.succeed Program
+        |. L.spaces
+        |= expr
+        |. P.end
+
+
+expr : Parser Expr
+expr =
+    P.oneOf
+        [ constExpr
+        , diffExpr
+        , zeroExpr
+        , ifExpr
+        , varExpr
+        , letExpr
+        ]
+
+
+constExpr : Parser Expr
+constExpr =
+    P.map Const number
+
+
+number : Parser Number
+number =
+    L.digits
+
+
+diffExpr : Parser Expr
+diffExpr =
+    P.succeed Diff
+        |. L.symbol "-"
+        |. L.symbol "("
+        |= P.lazy (\_ -> expr)
+        |. L.symbol ","
+        |= P.lazy (\_ -> expr)
+        |. L.symbol ")"
+
+
+zeroExpr : Parser Expr
+zeroExpr =
+    P.succeed Zero
+        |. L.keyword "zero?"
+        |. L.symbol "("
+        |= P.lazy (\_ -> expr)
+        |. L.symbol ")"
+
+
+ifExpr : Parser Expr
+ifExpr =
+    P.succeed If
+        |. L.keyword "if"
+        |= P.lazy (\_ -> expr)
+        |. L.keyword "then"
+        |= P.lazy (\_ -> expr)
+        |. L.keyword "else"
+        |= P.lazy (\_ -> expr)
+
+
+varExpr : Parser Expr
+varExpr =
+    P.map Var id
+
+
+letExpr : Parser Expr
+letExpr =
+    P.succeed Let
+        |. L.keyword "let"
+        |= id
+        |. L.symbol "="
+        |= P.lazy (\_ -> expr)
+        |. L.keyword "in"
+        |= P.lazy (\_ -> expr)
+
+
+id : Parser Id
+id =
+    L.id keywords
+
+
+keywords : List String
+keywords =
+    --
+    -- Remember to update this list of keywords anytime you
+    -- introduce new reserved words into the language.
+    --
+    -- Since zero? is not a valid identifier we don't need
+    -- to include it in this list.
+    --
+    [ "else"
+    , "if"
+    , "in"
+    , "let"
+    , "then"
+    ]
