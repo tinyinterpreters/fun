@@ -155,5 +155,21 @@ suite =
                             )
                         )
                   )
+
+                -- Fun expressions
+                , ( "fun (x) x"
+                  , Just
+                        (Program
+                            (Fun "x" (Var "x"))
+                        )
+                  )
+
+                -- Call expressions
+                , ( "(identity x)"
+                  , Just
+                        (Program
+                            (Call (Var "identity") (Var "x"))
+                        )
+                  )
                 ]
         ]

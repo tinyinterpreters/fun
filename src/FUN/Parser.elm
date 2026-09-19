@@ -31,6 +31,8 @@ expr =
         , ifExpr
         , varExpr
         , letExpr
+        , funExpr
+        , callExpr
         ]
 
 
@@ -91,6 +93,25 @@ letExpr =
         |= P.lazy (\_ -> expr)
 
 
+funExpr : Parser Expr
+funExpr =
+    P.succeed Fun
+        |. L.keyword "fun"
+        |. L.symbol "("
+        |= id
+        |. L.symbol ")"
+        |= P.lazy (\_ -> expr)
+
+
+callExpr : Parser Expr
+callExpr =
+    P.succeed Call
+        |. L.symbol "("
+        |= P.lazy (\_ -> expr)
+        |= P.lazy (\_ -> expr)
+        |. L.symbol ")"
+
+
 id : Parser Id
 id =
     L.id keywords
@@ -106,6 +127,7 @@ keywords =
     -- to include it in this list.
     --
     [ "else"
+    , "fun"
     , "if"
     , "in"
     , "let"
