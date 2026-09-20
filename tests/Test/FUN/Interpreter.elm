@@ -271,6 +271,33 @@ suite =
                     """
                   , SucceedsWith (VNumber 7)
                   )
+
+                --- Functions are dynamically scoped
+                , ( """
+                    let
+                      add =
+                        fun (a)
+                          fun (b)
+                            -(a, -(0, b))
+                    in
+                    ((add 3) 5)
+                    """
+                  , RuntimeError <| I.IdentifierNotFound "a"
+                  )
+                , ( """
+                    let
+                      add =
+                        fun (a)
+                          fun (b)
+                            -(a, -(0, b))
+                    in
+                    let
+                      a = 11
+                    in
+                    ((add 3) 5)
+                    """
+                  , SucceedsWith (VNumber 16)
+                  )
                 ]
         ]
 
