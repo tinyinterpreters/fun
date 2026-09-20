@@ -216,7 +216,7 @@ suite =
                 -- Functions
                 --- An anonymous function
                 , ( "fun (x) x"
-                  , SucceedsWith (VFun "x" (Var "x"))
+                  , SucceedsWith (VFun <| I.Closure "x" (Var "x") I.initEnv)
                   )
 
                 --- A named function
@@ -227,7 +227,7 @@ suite =
                     in
                     identity
                     """
-                  , SucceedsWith (VFun "x" (Var "x"))
+                  , SucceedsWith (VFun <| I.Closure "x" (Var "x") I.initEnv)
                   )
 
                 --- Calling a function
@@ -272,7 +272,7 @@ suite =
                   , SucceedsWith (VNumber 7)
                   )
 
-                --- Functions are dynamically scoped
+                --- Functions are lexically scoped
                 , ( """
                     let
                       add =
@@ -282,7 +282,7 @@ suite =
                     in
                     ((add 3) 5)
                     """
-                  , RuntimeError <| I.IdentifierNotFound "a"
+                  , SucceedsWith (VNumber 8)
                   )
                 , ( """
                     let
@@ -296,7 +296,7 @@ suite =
                     in
                     ((add 3) 5)
                     """
-                  , SucceedsWith (VNumber 16)
+                  , SucceedsWith (VNumber 8)
                   )
                 ]
         ]

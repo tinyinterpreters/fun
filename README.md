@@ -1,4 +1,4 @@
-# FUN - Dynamic Scope
+# FUN - Lexical Scope
 
 FUN extends [LET](https://github.com/tinyinterpreters/let) with first-class functions.
 
@@ -41,9 +41,9 @@ in
 ((select 1) 8)
 ```
 
-In this version of FUN, functions are **dynamically scoped** (for the lexically scoped version check out the [`lexical-scope`](https://github.com/tinyinterpreters/fun/tree/lexical-scope) branch). The runtime value that represents a function definition does not save the environment in which it was created. When the function is called, its free variables are looked up in the environment in which it was called.
+In this version of FUN, functions are **lexically scoped** (for the dynamically scoped version check out the [`dynamic-scope`](https://github.com/tinyinterpreters/fun/tree/dynamic-scope) branch). The runtime value that represents a function definition now saves the environment in which the function was created. This value is called a **closure**. When the function is called, the closure associated with that function provides the environment in which that function's free variables can be accessed.
 
-For example:
+So the following example:
 
 ```txt
 let
@@ -58,9 +58,9 @@ in
 ((add 3) 5)
 ```
 
-evaluates to `16` and not `8`.
+evaluates to `8` and not `16`.
 
-For a closer look at how first-class dynamically scoped functions work, read [FUN: First-Class Functions, Currying, and a Surprise](https://blog.tinyinterpreters.dev/posts/fun-first-class-functions/).
+For a closer look at how closures enable lexically scoped functions, read [FUN: Lexical Scope and Closures](https://blog.tinyinterpreters.dev/posts/fun-lexical-scope-closures).
 
 ## Explore
 
@@ -88,5 +88,5 @@ I.run """
   in
   ((add 3) 5)
 """
--- Ok (VNumber 16)
+-- Ok (VNumber 8)
 ```
