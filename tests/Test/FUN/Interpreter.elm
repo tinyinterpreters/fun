@@ -222,8 +222,8 @@ suite =
                 --- A named function
                 , ( """
                     let
-                        identity =
-                            fun (x) x
+                      identity =
+                        fun (x) x
                     in
                     identity
                     """
@@ -233,8 +233,8 @@ suite =
                 --- Calling a function
                 , ( """
                     let
-                        identity =
-                            fun (x) x
+                      identity =
+                        fun (x) x
                     in
                     (identity -(456, 123))
                     """
@@ -244,12 +244,12 @@ suite =
                 --- Passing a function as an argument to another function
                 , ( """
                     let
-                        applytwice =
-                            fun (f) (f (f 5))
+                      applytwice =
+                        fun (f) (f (f 5))
                     in
                     let
-                        double =
-                            fun (x) -(x, -(0, x))
+                      double =
+                        fun (x) -(x, -(0, x))
                     in
                     (applytwice double)
                     """
@@ -259,13 +259,13 @@ suite =
                 --- Returning a function as a result from another function
                 , ( """
                     let
-                        select =
-                            fun (n)
-                                if zero?(n) then
-                                    fun (x) x
+                      select =
+                        fun (n)
+                          if zero?(n) then
+                            fun (x) x
 
-                                else
-                                    fun (x) -(x, 1)
+                          else
+                            fun (x) -(x, 1)
                     in
                     ((select 1) 8)
                     """
