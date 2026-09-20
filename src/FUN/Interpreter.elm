@@ -1,8 +1,10 @@
 module FUN.Interpreter exposing
-    ( Error(..)
+    ( Closure(..)
+    , Error(..)
     , RuntimeError(..)
     , Type(..)
     , Value(..)
+    , initEnv
     , run
     )
 
@@ -14,7 +16,11 @@ import FUN.Parser as P
 type Value
     = VNumber Number
     | VBool Bool
-    | VFun Id Expr
+    | VFun Closure
+
+
+type Closure
+    = Closure Id Expr Env
 
 
 type Error
@@ -111,7 +117,7 @@ runExpr expr env =
                     )
 
         Fun param body ->
-            Ok <| VFun param body
+            Ok <| VFun <| Closure param body env
 
         Call f arg ->
             runExpr f env
@@ -120,7 +126,7 @@ runExpr expr env =
                         runExpr arg env
                             |> Result.andThen
                                 (\vArg ->
-                                    evalCall vF vArg env
+                                    evalCall vF vArg
                                 )
                     )
 
@@ -170,11 +176,11 @@ evalIf vCondition consequent alternative env =
                     }
 
 
-evalCall : Value -> Value -> Env -> Result RuntimeError Value
-evalCall vF vArg env =
+evalCall : Value -> Value -> Result RuntimeError Value
+evalCall vF vArg =
     case vF of
-        VFun param body ->
-            runExpr body (Env.extend param vArg env)
+        VFun (Closure param body savedEnv) ->
+            runExpr body (Env.extend param vArg savedEnv)
 
         _ ->
             Err <|
@@ -193,5 +199,5 @@ typeOf v =
         VBool _ ->
             TBool
 
-        VFun _ _ ->
+        VFun _ ->
             TFun
