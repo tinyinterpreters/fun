@@ -229,6 +229,48 @@ suite =
                     """
                   , SucceedsWith (VFun "x" (Var "x"))
                   )
+
+                --- Calling a function
+                , ( """
+                    let
+                        identity =
+                            fun (x) x
+                    in
+                    (identity -(456, 123))
+                    """
+                  , SucceedsWith (VNumber 333)
+                  )
+
+                --- Passing a function as an argument to another function
+                , ( """
+                    let
+                        applytwice =
+                            fun (f) (f (f 5))
+                    in
+                    let
+                        double =
+                            fun (x) -(x, -(0, x))
+                    in
+                    (applytwice double)
+                    """
+                  , SucceedsWith (VNumber 20)
+                  )
+
+                --- Returning a function as a result from another function
+                , ( """
+                    let
+                        select =
+                            fun (n)
+                                if zero?(n) then
+                                    fun (x) x
+
+                                else
+                                    fun (x) -(x, 1)
+                    in
+                    ((select 1) 8)
+                    """
+                  , SucceedsWith (VNumber 7)
+                  )
                 ]
         ]
 

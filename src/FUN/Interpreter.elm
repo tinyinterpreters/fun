@@ -113,8 +113,16 @@ runExpr expr env =
         Fun param body ->
             Ok <| VFun param body
 
-        Call _ _ ->
-            Ok <| VNumber 0
+        Call f arg ->
+            runExpr f env
+                |> Result.andThen
+                    (\vF ->
+                        runExpr arg env
+                            |> Result.andThen
+                                (\vArg ->
+                                    evalCall vF vArg env
+                                )
+                    )
 
 
 evalDiff : Value -> Value -> Result RuntimeError Value
@@ -159,6 +167,20 @@ evalIf vCondition consequent alternative env =
                 TypeError
                     { expected = [ TBool ]
                     , actual = [ typeOf vCondition ]
+                    }
+
+
+evalCall : Value -> Value -> Env -> Result RuntimeError Value
+evalCall vF vArg env =
+    case vF of
+        VFun param body ->
+            runExpr body (Env.extend param vArg env)
+
+        _ ->
+            Err <|
+                TypeError
+                    { expected = [ TFun ]
+                    , actual = [ typeOf vF ]
                     }
 
 
