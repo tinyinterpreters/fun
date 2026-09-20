@@ -1,6 +1,7 @@
 module Test.FUN.Interpreter exposing (suite)
 
 import Expect
+import FUN.AST exposing (..)
 import FUN.Interpreter as I exposing (Value(..))
 import Test exposing (Test, describe, test)
 
@@ -210,6 +211,23 @@ suite =
                             { expected = [ I.TNumber ]
                             , actual = [ I.TBool ]
                             }
+                  )
+
+                -- Functions
+                --- An anonymous function
+                , ( "fun (x) x"
+                  , SucceedsWith (VFun "x" (Var "x"))
+                  )
+
+                --- A named function
+                , ( """
+                    let
+                        identity =
+                            fun (x) x
+                    in
+                    identity
+                    """
+                  , SucceedsWith (VFun "x" (Var "x"))
                   )
                 ]
         ]

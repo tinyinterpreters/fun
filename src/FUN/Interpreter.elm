@@ -14,6 +14,7 @@ import FUN.Parser as P
 type Value
     = VNumber Number
     | VBool Bool
+    | VFun Id Expr
 
 
 type Error
@@ -32,6 +33,7 @@ type RuntimeError
 type Type
     = TNumber
     | TBool
+    | TFun
 
 
 run : String -> Result Error Value
@@ -108,8 +110,8 @@ runExpr expr env =
                         runExpr body (Env.extend name vBound env)
                     )
 
-        Fun _ _ ->
-            Ok <| VNumber 0
+        Fun param body ->
+            Ok <| VFun param body
 
         Call _ _ ->
             Ok <| VNumber 0
@@ -168,3 +170,6 @@ typeOf v =
 
         VBool _ ->
             TBool
+
+        VFun _ _ ->
+            TFun
