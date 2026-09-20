@@ -41,7 +41,7 @@ in
 ((select 1) 8)
 ```
 
-In this version of FUN, functions are **dynamically scoped**. A function does not save the environment in which it was created. When the function is called, its free variables are looked up in the environment in which it was called.
+In this version of FUN, functions are **dynamically scoped** (for the lexically scoped version check out the [`lexical-scope`](https://github.com/tinyinterpreters/fun/tree/lexical-scope) branch). The runtime value that represents a function definition does not save the environment in which it was created. When the function is called, its free variables are looked up in the environment in which it was called.
 
 For example:
 
@@ -60,7 +60,7 @@ in
 
 evaluates to `16` and not `8`.
 
-For a closer look at how first-class functions are implemented and how dynamic scope works, read [FUN: First-Class Functions and Dynamic Scope](https://blog.tinyinterpreters.dev/posts/fun-dynamic-scope).
+For a closer look at how first-class dynamically scoped functions work, read [FUN: First-Class Functions and Dynamic Scope](https://blog.tinyinterpreters.dev/posts/fun-dynamic-scope).
 
 ## Explore
 
