@@ -60,7 +60,7 @@ in
 
 evaluates to `16` and not `8`.
 
-For a closer look at how first-class dynamically scoped functions work, read [FUN: First-Class Functions and Dynamic Scope](https://blog.tinyinterpreters.dev/posts/fun-dynamic-scope).
+For a closer look at how first-class dynamically scoped functions work, read [FUN: First-Class Functions, Currying, and a Surprise](https://blog.tinyinterpreters.dev/posts/fun-first-class-functions/).
 
 ## Explore
 
