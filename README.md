@@ -60,7 +60,7 @@ in
 
 evaluates to `8` and not `16`.
 
-For a closer look at how closures enable lexically scoped functions, read [FUN: Lexical Scope and Closures](https://blog.tinyinterpreters.dev/posts/fun-lexical-scope-closures).
+For a closer look at how closures enable lexically scoped functions, read [FUN: Making Curried Functions Work in the Presence of Free Variables](https://blog.tinyinterpreters.dev/posts/fun-currying-free-variables).
 
 ## Explore
 
