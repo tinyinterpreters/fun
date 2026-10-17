@@ -62,9 +62,9 @@ evaluates to `16` and not `8`.
 
 For a closer look at how first-class dynamically scoped functions work, read [FUN: First-Class Functions, Currying, and a Surprise](https://blog.tinyinterpreters.dev/posts/fun-first-class-functions/).
 
-## Explore
+## Try it
 
-To explore this language on your own machine, you'll need [Nix](https://zero-to-nix.com/start/install/) with flakes enabled.
+You'll need [Nix](https://nixos.org/) with flakes enabled.
 
 ```bash
 nix develop
