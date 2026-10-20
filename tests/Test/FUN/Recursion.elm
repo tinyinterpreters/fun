@@ -8,7 +8,11 @@ import Test exposing (Test, describe, test)
 suite : Test
 suite =
     describe "Recursion via self-application" <|
-        [ test "makedouble" <|
+        [ test "makesum" <|
+            \_ ->
+                I.run makesum
+                    |> Expect.equal (Ok <| VNumber <| sum 10)
+        , test "makedouble" <|
             \_ ->
                 I.run makedouble
                     |> Expect.equal (Ok <| VNumber <| double 100)
@@ -29,6 +33,16 @@ suite =
 
 
 -- Recursion in Elm
+
+
+
+sum : Int -> Int
+sum n =
+    if n == 0 then
+        0
+
+    else
+        n + sum (n - 1)
 
 
 double : Int -> Int
@@ -72,6 +86,26 @@ fib n =
 
 
 -- Self-application in FUN
+
+
+
+makesum : String
+makesum =
+    """
+    let
+        makesum =
+            fun (self)
+                fun (n)
+                    if zero?(n) then
+                        0
+                    else
+                        -(n, -(0, ((self self) -(n, 1))))
+    in
+    let
+        sum = (makesum makesum)
+    in
+    (sum 10)
+    """
 
 
 makedouble : String
